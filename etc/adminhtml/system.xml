@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="followthesun" translate="label" sortOrder="300">
+            <label>Follow The Sun</label>
+        </tab>
+
+        <section id="followthesun" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Configuration</label>
+            <tab>followthesun</tab>
+            <resource>FollowTheSun_Connector::configuration</resource>
+
+            <group id="general" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+
+                <field id="module_version" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Module version</label>
+                    <frontend_model>FollowTheSun\Connector\Block\Adminhtml\System\Config\Version</frontend_model>
+                </field>
+            </group>
+
+            <group id="sunflow_configuration" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Sunflow Configuration</label>
+
+                <field id="api_key" translate="label" type="obscure" sortOrder="0" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Api Key</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+
+                <field id="source_id" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Source ID</label>
+                    <validate>validate-digits required-entry</validate>
+                </field>
+
+                <field id="zone_id" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Zone ID</label>
+                    <validate>validate-digits required-entry</validate>
+                </field>
+
+                <field id="brand_id" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Brand ID</label>
+                    <validate>validate-digits required-entry</validate>
+                </field>
+
+                <field id="address_type_id" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Address type ID</label>
+                    <validate>validate-digits required-entry</validate>
+                </field>
+            </group>
+
+            <group id="export_configuration" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Export configuration</label>
+
+                <field id="cron_expression" translate="label comment" type="text" sortOrder="0" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Export hour</label>
+                    <backend_model>FollowTheSun\Connector\Model\Config\Backend\CronExpression</backend_model>
+                    <comment>
+                        <![CDATA[<strong>Hour must be in 0-23 range.</strong><br/>This value corresponds to the time at which the export will take place. (24-hour notation). By default, export will take place at 2am.]]></comment>
+                    <validate>validate-digits required-entry validate-not-negative-number validate-digits-range digits-range-0-23</validate>
+                </field>
+
+                <field id="mode" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Mode</label>
+                    <source_model>FollowTheSun\Connector\Model\Config\Source\Mode</source_model>
+                    <comment>
+                        <![CDATA[Delta: Export data based on the last export. If an entity has not been modified since last export, it will not be exported.<br/>Full: Export all data<br/><strong>Note: Delta mode only works for Order and Customer entity.<br/>Product and Category entities will always be on full mode.</strong>]]>
+                    </comment>
+                </field>
+
+                <field id="clean_files" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Delete generated files</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>
+                        <![CDATA[Generated entity file contained in <root_magento>/var/export/follow-the-sun will be deleted after FTP deposit.]]>
+                    </comment>
+                </field>
+
+                <group id="entity_export" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Entities export</label>
+
+                    <field id="product" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Enable Product export</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+
+                    <field id="product_store" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Enable Product Store export</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+
+                    <field id="category" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Enable Category export</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+
+                    <field id="customer" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Enable Customer export</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+
+                    <field id="order" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Enable Order export</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                </group>
+
+                <group id="ftp" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>FTP Configuration</label>
+
+                    <field id="host" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Host</label>
+                    </field>
+
+                    <field id="port" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Port</label>
+                    </field>
+
+                    <field id="username" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Username</label>
+                    </field>
+
+                    <field id="password" translate="label" type="obscure" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Password</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    </field>
+                </group>
+            </group>
+
+            <group id="debug_configuration" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Debug</label>
+
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Debug</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Logs will be available in root_magento/var/log/follow-the-sun-connector.log file]]></comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

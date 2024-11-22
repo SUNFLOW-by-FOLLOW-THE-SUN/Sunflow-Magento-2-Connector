@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Preferences -->
+    <preference for="FollowTheSun\Connector\Model\Export\ExportInterface" type="FollowTheSun\Connector\Model\Export\Export" />
+    <preference for="FollowTheSun\Connector\Service\Ftp\FtpInterface" type="FollowTheSun\Connector\Service\Ftp\Ftp" />
+    <preference for="FollowTheSun\Connector\Service\Module\GetVersionInterface" type="FollowTheSun\Connector\Service\Module\GetVersion" />
+    <!-- /Preferences -->
+
+    <!-- Command definitions && Virtual types-->
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="followthesun_command_export_product" xsi:type="object">FollowTheSunExportProductCommand</item>
+                <item name="followthesun_command_export_product_store" xsi:type="object">FollowTheSunExportProductStoreCommand</item>
+                <item name="followthesun_command_export_category" xsi:type="object">FollowTheSunExportCategoryCommand</item>
+                <item name="followthesun_command_export_customer" xsi:type="object">FollowTheSunExportCustomerCommand</item>
+                <item name="followthesun_command_export_order" xsi:type="object">FollowTheSunExportOrderCommand</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="FollowTheSunExportProductCommand" type="FollowTheSun\Connector\Command\ExportCommand">
+        <arguments>
+            <argument name="export" xsi:type="object">FollowTheSunExportEntityProduct</argument>
+            <argument name="name" xsi:type="string">follow-the-sun:export:product</argument>
+            <argument name="description" xsi:type="string">Export Product for Follow The Sun</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="FollowTheSunExportProductStoreCommand" type="FollowTheSun\Connector\Command\ExportCommand">
+        <arguments>
+            <argument name="export" xsi:type="object">FollowTheSunExportEntityProductStore</argument>
+            <argument name="name" xsi:type="string">follow-the-sun:export:product-store</argument>
+            <argument name="description" xsi:type="string">Export Product Store for Follow The Sun</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="FollowTheSunExportCategoryCommand" type="FollowTheSun\Connector\Command\ExportCommand">
+        <arguments>
+            <argument name="export" xsi:type="object">FollowTheSunExportEntityCategory</argument>
+            <argument name="name" xsi:type="string">follow-the-sun:export:category</argument>
+            <argument name="description" xsi:type="string">Export Category for Follow The Sun</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="FollowTheSunExportCustomerCommand" type="FollowTheSun\Connector\Command\ExportCommand">
+        <arguments>
+            <argument name="export" xsi:type="object">FollowTheSunExportEntityCustomer</argument>
+            <argument name="name" xsi:type="string">follow-the-sun:export:customer</argument>
+            <argument name="description" xsi:type="string">Export Customer for Follow The Sun</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="FollowTheSunExportOrderCommand" type="FollowTheSun\Connector\Command\ExportCommand">
+        <arguments>
+            <argument name="export" xsi:type="object">FollowTheSunExportEntityOrder</argument>
+            <argument name="name" xsi:type="string">follow-the-sun:export:order</argument>
+            <argument name="description" xsi:type="string">Export Order for Follow The Sun</argument>
+        </arguments>
+    </virtualType>
+    <!-- /Command definitions && Virtual types-->
+
+    <!-- Entity Virtual types -->
+    <virtualType name="FollowTheSunExportEntityProduct" type="FollowTheSun\Connector\Model\Export\Export">
+        <arguments>
+            <argument name="entity" xsi:type="object">FollowTheSun\Connector\Model\Export\Entity\Product</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="FollowTheSunExportEntityProductStore" type="FollowTheSun\Connector\Model\Export\Export">
+        <arguments>
+            <argument name="entity" xsi:type="object">FollowTheSun\Connector\Model\Export\Entity\ProductStore</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="FollowTheSunExportEntityCategory" type="FollowTheSun\Connector\Model\Export\Export">
+        <arguments>
+            <argument name="entity" xsi:type="object">FollowTheSun\Connector\Model\Export\Entity\Category</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="FollowTheSunExportEntityCustomer" type="FollowTheSun\Connector\Model\Export\Export">
+        <arguments>
+            <argument name="entity" xsi:type="object">FollowTheSun\Connector\Model\Export\Entity\Customer</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="FollowTheSunExportEntityOrder" type="FollowTheSun\Connector\Model\Export\Export">
+        <arguments>
+            <argument name="entity" xsi:type="object">FollowTheSun\Connector\Model\Export\Entity\Order</argument>
+        </arguments>
+    </virtualType>
+    <!-- /Entity Virtual types -->
+
+    <!-- Export Steps & Processors -->
+    <type name="FollowTheSun\Connector\Model\Export\Export">
+        <arguments>
+            <argument name="steps" xsi:type="array">
+                <item name="entity_export_enabled" xsi:type="object">FollowTheSun\Connector\Model\Export\Steps\EntityExportEnabled</item>
+                <item name="entity_has_data_to_export" xsi:type="object">FollowTheSun\Connector\Model\Export\Steps\EntityHasDataToExport</item>
+                <item name="entity_export" xsi:type="object">FollowTheSun\Connector\Model\Export\Steps\EntityExport</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="FollowTheSun\Connector\Model\Export\Steps\EntityExport">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="export_file" xsi:type="object">FollowTheSun\Connector\Model\Export\Processor\File</item>
+                <item name="export_sftp" xsi:type="object">FollowTheSun\Connector\Model\Export\Processor\Ftp</item>
+                <item name="export_clean" xsi:type="object">FollowTheSun\Connector\Model\Export\Processor\Clean</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- /Export Steps & Processors -->
+
+    <!-- Logger -->
+    <type name="FollowTheSun\Connector\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+
+    <type name="FollowTheSun\Connector\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">FollowTheSunConnectorLogger</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">FollowTheSun\Connector\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- /Logger -->
+</config>

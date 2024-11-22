@@ -1,0 +1,21 @@
+{
+  "name": "follow-the-sun/sunflow-magento2-connector",
+  "description": "Follow The Sun Sunflow Connector for Magento 2",
+  "type": "magento2-module",
+  "require": {
+    "magento/framework": "*",
+    "follow-the-sun/sunflow-sdk-php": "^1.0"
+  },
+  "license": [
+    "Proprietary"
+  ],
+  "version": "1.0.0",
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "FollowTheSun\\Connector\\": ""
+    }
+  }
+}

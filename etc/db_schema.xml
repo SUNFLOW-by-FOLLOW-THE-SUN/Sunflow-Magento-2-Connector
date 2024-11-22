@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="followthesun_export_date" resource="default" engine="innodb" comment="Follow The Sun Connector Export Date for Entities">
+        <column xsi:type="int" name="id" unsigned="true" nullable="false" identity="true" comment="Export Date ID"/>
+        <column xsi:type="varchar" name="entity_type" nullable="false" comment="Entity Type"/>
+        <column xsi:type="timestamp" name="last_export_date" nullable="true" comment="Last Export Date"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="FOLLOWTHESUN_EXPORT_DATE_UNIQUE_ENTITY_TYPE">
+            <column name="entity_type"/>
+        </constraint>
+    </table>
+
+    <table name="newsletter_subscriber" resource="default" engine="innodb">
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                onCreate="migrateDataFrom(change_status_at)"
+                comment="Created At"/>
+    </table>
+</schema>

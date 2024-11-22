@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <followthesun>
+            <export_configuration>
+                <cron_expression>0 2 * * *</cron_expression>
+                <entity_export>
+                    <product>1</product>
+                    <product_store>1</product_store>
+                    <category>1</category>
+                    <customer>1</customer>
+                    <order>1</order>
+                </entity_export>
+                <mode>1</mode>
+                <clean_files>0</clean_files>
+            </export_configuration>
+            <debug_configuration>
+                <enabled>0</enabled>
+            </debug_configuration>
+        </followthesun>
+    </default>
+</config>

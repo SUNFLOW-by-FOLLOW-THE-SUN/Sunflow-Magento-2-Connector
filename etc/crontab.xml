@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="followthesun_export_product" instance="FollowTheSunExportEntityProduct" method="export">
+            <config_path>followthesun/export_configuration/cron_expression</config_path>
+        </job>
+
+        <job name="followthesun_export_product_store" instance="FollowTheSunExportEntityProductStore" method="export">
+            <config_path>followthesun/export_configuration/cron_expression</config_path>
+        </job>
+
+        <job name="followthesun_export_product_category" instance="FollowTheSunExportEntityCategory" method="export">
+            <config_path>followthesun/export_configuration/cron_expression</config_path>
+        </job>
+
+        <job name="followthesun_export_customer" instance="FollowTheSunExportEntityCustomer" method="export">
+            <config_path>followthesun/export_configuration/cron_expression</config_path>
+        </job>
+
+        <job name="followthesun_export_order" instance="FollowTheSunExportEntityOrder" method="export">
+            <config_path>followthesun/export_configuration/cron_expression</config_path>
+        </job>
+    </group>
+</config>
