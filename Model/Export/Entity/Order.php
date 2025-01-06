@@ -65,8 +65,9 @@ class Order implements EntityInterface
     public function buildLine(array $batchData, array $orderItem): array
     {
         return [
-            'ecommerce_command_id'             => $batchData['so.increment_id'],
-            'code_magasin'                     => $batchData['store.code'],
+            'ecommerce_command_id'             => $batchData['so.entity_id'],
+            'order_reference'                  => $batchData['so.increment_id'],
+            'code_magasin'                     => $batchData['store.code'] ?? 'default',
             'order_creation_date'              => $this->getOrderCreationDate($batchData['so.created_at']),
             'ecommerce_contact_id'             => $batchData['so.customer_id'],
             'currency'                         => $batchData['so.order_currency_code'],

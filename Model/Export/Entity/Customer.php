@@ -48,6 +48,8 @@ class Customer implements EntityInterface
         $customerAddressUpdatedAt = $this->getFormattedDate($customerData['cae.updated_at'] ?? '');
         $addressCountryCode = (string) $this->getCountryCodeIso3((string) $customerData['cae.country_id']);
         $newsletterSubscribedUpdatedAt = $this->getFormattedDate($customerData['ns.change_status_at'] ?? '');
+        $visitorData = $this->getVisitorData()[$customerData['ce.entity_id']] ?? null;
+        $lastLoggedInDate = $visitorData ? $this->getFormattedDate($visitorData) : $customerUpdatedAt;
 
         return [
             'ecommerce_contact_id'      => $customerData['ce.entity_id'],
@@ -65,14 +67,12 @@ class Customer implements EntityInterface
             'phone'                     => $customerData['cae.telephone'],
             'phone_country_code'        => $addressCountryCode,
             'email'                     => $customerData['ce.email'],
-            'email_optin'               => $customerData['ns.subscriber_status'],
+            'email_optin'               => $customerData['ns.subscriber_status'] === '1' ?: 0,
             'email_optin_date'          => $newsletterSubscribedUpdatedAt ?: $customerUpdatedAt,
             'language_id'               => '',
             'created_date'              => $this->getFormattedDate($customerData['ce.created_at']),
             'updated_date'              => max($customerUpdatedAt, $customerAddressUpdatedAt),
-            'last_logged_in_date'       => $this->getFormattedDate(
-                $this->getVisitorData()[$customerData['ce.entity_id']] ?? ''
-            ),
+            'last_logged_in_date'       => $lastLoggedInDate,
             'newsletter_date_subscribe' => $newsletterSubscribedUpdatedAt,
             'store_code'                => $customerData['store.code'],
         ];
