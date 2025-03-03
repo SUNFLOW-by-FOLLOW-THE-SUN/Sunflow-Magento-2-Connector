@@ -2,6 +2,12 @@
 
 ## Sunflow Magento 2 Connector
 
+### Purpose
+
+Magento module that allows the synchronization of MAGENTO data with SUNFLOW. The synchronization is only in the direction of MAGENTO to SUNFLOW and concerns the data CUSTOMER / ORDER & CART / PRODUCT REPOSITORY
+
+This module is compatible with MAGENTO version 2.4.7 (and above)
+
 ### How to install
 
 You can install the Sunflow Magento 2 connector by using composer :
